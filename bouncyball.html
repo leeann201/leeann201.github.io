@@ -1,0 +1,78 @@
+<!doctype html5>
+<html>
+  <h1>First Real Site </h1>
+  <head>
+    <title>The Game of Pong </title>
+    <script type="text/javascript">
+      // Time in milliseconds before next refresh
+      var REFRESH_TIME = 10;
+      // Width and height of canvas
+      var CANVAS_WIDTH = 500;
+      var CANVAS_HEIGHT = 300;
+      // Radius of the ball
+      var BALL_RADIUS = 10;
+      // Color of the ball
+      var BALL_COLOR = "#ff00ff";
+      // The x and y position of the ball. Start in the center
+      var ballX = CANVAS_WIDTH / 2;
+      var ballY = CANVAS_HEIGHT / 2;
+      // The current speed of the ball
+      var dx = 2;
+      var dy = 5;
+      /**
+       * This function takes a 2d canvas context and draws a ball on it at ballX and ballY
+       * of radius BALL_RADIUS and color BALL_COLOR.
+       */
+      function drawBall(context) {
+        // Move the ball
+        ballX = ballX + dx;
+        ballY = ballY + dy;
+        // If we've hit the left or right, turn around
+        if (ballX > CANVAS_WIDTH || ballX < 0) {
+          dx = -dx;
+        }
+        // If we've hit the top or bottom, turn around
+        if (ballY > CANVAS_HEIGHT || ballY < 0) {
+          dy = -dy;
+        }
+        // Actually draw the ball
+        context.beginPath();
+        context.fillStyle = BALL_COLOR;
+        context.arc(ballX, ballY, BALL_RADIUS, 0, 2 * Math.PI, true);
+        context.closePath();
+        context.fill();
+      }
+      /**
+       * This function is meant to be the refreshing drawing function. It gets the
+       * appropriate 2d canvas context, clears it, and delegates to the various
+       * things that are to be drawn.
+       */
+      function draw() {
+        var context = pongCanvas.getContext('2d');
+        context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        drawBall(context);
+      }
+      // Redraw the canvas every REFRESH_TIME milliseconds
+      setInterval(draw, REFRESH_TIME);
+    </script>
+    <style>
+      canvas#pongCanvas {
+        border-top-width: 2px;
+        border-left-width: 2px;
+        border-bottom-width: 2px;
+        border-right-width: 2px;
+        border-top-color: black;
+        border-left-color: black;
+        border-bottom-color: black;
+        border-right-color: black;
+        border-top-style: solid;
+        border-left-style: solid;
+        border-bottom-style: solid;
+        border-right-style: solid;
+      };
+    </style>
+  </head>
+  <body>
+    <canvas id="pongCanvas" width="500" height="300"></canvas>
+  </body>
+</html> 
